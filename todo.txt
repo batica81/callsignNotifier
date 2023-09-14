@@ -1,0 +1,8 @@
+morse play the message
+
+play customizable sound
+
+remove socketio
+
+read write path from menu
+
