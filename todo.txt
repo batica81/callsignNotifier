@@ -1,8 +1,14 @@
-morse play the message
+morse play customize
 
-play customizable sound
-
-remove socketio
+play customizable sound file
 
 read write path from menu
+
+read callsign
+
+minimize to tray
+
+ui design :)
+
+releases
 

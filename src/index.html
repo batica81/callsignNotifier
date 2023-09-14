@@ -2,14 +2,19 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Hello World!</title>
+    <title>Callsign Notifier</title>
     <link rel="stylesheet" href="index.css" />
+    <script src="Morse.js"></script>
   </head>
   <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
-    <div id="counter">0</div>
-    <button class="testButton">Test</button>
+    <h1>💖 This program will play a sound when you are called in WSJT-X!</h1>
+    <p>Welcome to Callsign Notifier application!</p>
+
+    <button class="testButton">Test sound</button>
+
+    <input type="file" id="fileInput" style="display: none;">
+    <button id="selectFileButton">Select ALL.TXT File</button>
+
     <script type="text/javascript" src="renderer.js"></script>
   </body>
 </html>

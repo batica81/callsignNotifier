@@ -4,20 +4,10 @@ const Tail = require('tail-file');
 
 let mainWindow
 const callsign = 'YU4HAK'
-let mytail
-const isWin = process.platform === 'win32'
-
-console.log('starting app')
-
-if (isWin) {
-  // Windows:
-  // mytail = new Tail(process.env.WIN_ALL_PATH)
-  mytail = new Tail("/Users/Voja/AppData/Local/WSJT-X/test.txt")
-} else {
-  // Linux:
-  // mytail = new Tail(process.env.LIN_ALL_PATH)
-  mytail = new Tail("/home/voja/.local/share/WSJT-X/test.txt")
-}
+// let tailFile = "/home/voja/.local/share/WSJT-X/test.txt"  //lin
+// let tailFile = "/Users/Voja/AppData/Local/WSJT-X/test.txt"  //win
+let tailFile = "/Users/Voja/AppData/Local/WSJT-X/all.txt"  //win
+tailFile = new Tail(tailFile)
 
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -39,23 +29,15 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-// app.on('ready', createWindow);
-
 app.whenReady().then(() => {
-  // ipcMain.on('counter-value', (_event, value) => {
-  //   console.log(value) // will print value to Node console
-  // })
   createWindow()
 
-  // app.on('activate', function () {
-  //   if (mainWindow.getAllWindows().length === 0) createWindow()
-  // })
+  app.on('activate', function () {
+    if (mainWindow.getAllWindows().length === 0) createWindow()
+  })
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -78,14 +60,17 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-mytail.on('line', line => {
+tailFile.on('line', line => {
   const lineArray = line.split(' ').filter(word => word !== '')
+  let messageArray = [lineArray[7], lineArray[8], lineArray[9]]
+  let messageString = messageArray.join(" ").trim()
 
-  if (lineArray[7] === callsign) {
-    console.log('alerting ' + callsign)
-    mainWindow.webContents.send("counter-value", line)
+  // alerting only if message for us, and is a response to CQ
+  if (lineArray[7] === callsign && lineArray[9].length > 2) {
+    console.log('Alerting ' + callsign)
+    mainWindow.webContents.send("counter-value", messageString)
 
   }
 })
 
-mytail.start()
+tailFile.start()
