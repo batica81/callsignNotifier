@@ -7,7 +7,7 @@
  */
 let MorseJs = { empty: true }
 
-function morseInit () {
+function morseInit (gainVAlue) {
   MorseJs = {
     _wpm: 20,
     setWpm: function (wpm) {
@@ -24,7 +24,7 @@ function morseInit () {
       this._dahLength = (1.2 / this._wpm) * 3
       this._oscillator = this._context.createOscillator()
       this._oscillator.type = 'sine'
-      this._oscillator.frequency.value = 750
+      this._oscillator.frequency.value = 800
 
       this._gain = this._context.createGain()
       this._gain.gain.value = 0
@@ -32,16 +32,6 @@ function morseInit () {
       this._oscillator.connect(this._gain) // Sound to gain
       this._gain.connect(this._context.destination) // Gain to output
       this._start()
-
-      console.log('%c                                                                                                                   \r\n' +
-                    '  .___                     MorseJs © 2017 Joshua Carroll, Released under the MIT license                     -.-.  \r\n' +
-                    '                                    https://github.com/JoshuaCarroll/MorseJs/                                      \r\n' +
-                    '                                                                                                                   \r\n' +
-                    '               Usage: MorseJs.Play(string TextToSend, [int SpeedInWordsPerMinute, int ToneFrequency]);             \r\n' +
-                    '                      MorseJs.Play("cq cq de n5jlc k");                                                            \r\n' +
-                    '                      MorseJs.Play("cq cq de n5jlc k", 25);                                                        \r\n' +
-                    '                      MorseJs.Play("cq cq de n5jlc k", 25, 500);                                                   \r\n' +
-                    '                                                                                                                   ', 'background: #222; color: #bada55;')
 
       return this
     },
@@ -57,12 +47,12 @@ function morseInit () {
       for (let i = 0; i < character.length; i++) {
         switch (character[i]) {
           case '.':
-            this._gain.gain.setValueAtTime(1.0, startTime)
+            this._gain.gain.setValueAtTime(gainVAlue, startTime)
             startTime += this._ditLength
             this._gain.gain.setValueAtTime(0.0, startTime)
             break
           case '-':
-            this._gain.gain.setValueAtTime(1.0, startTime)
+            this._gain.gain.setValueAtTime(gainVAlue, startTime)
             startTime += this._dahLength
             this._gain.gain.setValueAtTime(0.0, startTime)
             break
@@ -151,7 +141,9 @@ function morseInit () {
       ')': '-.--.-',
       '&': '.-...',
       ':': '---...',
-      ';': '-.-.-.'
+      ';': '-.-.-.',
+      "-": "-....-",
+      "+": ".-.-."
     }
   }.init()
 }

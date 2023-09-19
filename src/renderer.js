@@ -2,36 +2,53 @@ const fileInput = document.getElementById('fileInput');
 const audio = new Audio('beep.mp3');
 const testButton = document.querySelector('.testButton')
 const selectFileButton = document.getElementById('selectFileButton');
+const filePath = document.querySelector('.filePath');
+
+let audioVolume = 0.5
+
+var slider = document.getElementById("slider");
+var sliderValue = document.getElementById("sliderValue");
+
+// Function to update the variable value when the slider is moved
+function updateValue() {
+    audioVolume = slider.value;
+    sliderValue.textContent = audioVolume * 100 + '%';
+}
+
+// Add an event listener to the slider to call the updateValue function when it changes
+slider.addEventListener("input", updateValue);
+
+// Call the updateValue function initially to set the initial value
+updateValue();
+
 
 window.electronAPI.handleCounter((event, line) => {
-    // beep();
     console.log('message: ', line)
     sendMorseMessage(line)
 })
 
-// Add an event listener to the button
 selectFileButton.addEventListener('click', () => {
     fileInput.click(); // Trigger the file input element
 });
 
-// Add an event listener to the file input
 fileInput.addEventListener('change', (event) => {
     const selectedFilePath = event.target.value; // Get the selected file path
 
     // Save the selected file path to localStorage
     localStorage.setItem('selectedFilePath', selectedFilePath);
+    filePath.textContent = selectedFilePath
 
-    // You can display the selected file path or perform other actions here
     console.log(`Selected file path: ${selectedFilePath}`);
 });
 
 testButton.addEventListener('click', () => {
-    audio.play();
+        morseInit(audioVolume)
+
+    audio.volume = audioVolume;
+    sendMorseMessage("v")
 });
 
 function sendMorseMessage (message) {
-    if (MorseJs.empty) {
-        morseInit()
-    }
+        morseInit(audioVolume)
     MorseJs.Play(message, 20, 800);
 }
