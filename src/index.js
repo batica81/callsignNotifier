@@ -4,8 +4,8 @@ const Tail = require('tail-file');
 
 let mainWindow
 const callsign = 'YU4HAK'
-let tailFile = "/home/voja/.local/share/WSJT-X/test.txt"  //lin
-// let tailFile = "/Users/Voja/AppData/Local/WSJT-X/test.txt"  //win
+// let tailFile = "/home/voja/.local/share/WSJT-X/test.txt"  //lin
+let tailFile = "/Users/Voja/AppData/Local/WSJT-X/test.txt"  //win
 // let tailFile = "/Users/Voja/AppData/Local/WSJT-X/all.txt"  //win
 tailFile = new Tail(tailFile)
 

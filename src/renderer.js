@@ -31,24 +31,20 @@ selectFileButton.addEventListener('click', () => {
     fileInput.click(); // Trigger the file input element
 });
 
-fileInput.addEventListener('change', (event) => {
-    const selectedFilePath = event.target.value; // Get the selected file path
-
+fileInput.addEventListener('change', () => {
+    const selectedFilePath = document.getElementById("fileInput").files[0].path;
     // Save the selected file path to localStorage
     localStorage.setItem('selectedFilePath', selectedFilePath);
     filePath.textContent = selectedFilePath
-
-    console.log(`Selected file path: ${selectedFilePath}`);
 });
 
 testButton.addEventListener('click', () => {
-        morseInit(audioVolume)
-
-    audio.volume = audioVolume;
+    morseInit(audioVolume)
+//    audio.volume = audioVolume;
     sendMorseMessage("v")
 });
 
 function sendMorseMessage (message) {
-        morseInit(audioVolume)
+    morseInit(audioVolume)
     MorseJs.Play(message, 20, 800);
 }
