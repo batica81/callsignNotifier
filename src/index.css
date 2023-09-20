@@ -6,3 +6,15 @@ body {
   padding: 2rem;
   background-color: antiquewhite;
 }
+
+#fileInput, #soundFileInput {
+  display: none;
+}
+
+.testButton {
+  margin-bottom: 15px;
+}
+
+.callsignInputContainer {
+  margin-bottom: 15px;
+}

@@ -1,5 +1,3 @@
-morse play customize
-
 play customizable sound file
 
 read write path from menu
@@ -12,3 +10,4 @@ ui design :)
 
 releases
 
+code cleanup

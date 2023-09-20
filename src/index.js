@@ -9,7 +9,6 @@ let tailFile = "/Users/Voja/AppData/Local/WSJT-X/test.txt"  //win
 // let tailFile = "/Users/Voja/AppData/Local/WSJT-X/all.txt"  //win
 tailFile = new Tail(tailFile)
 
-
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -20,6 +19,7 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    icon: path.join(__dirname, 'lion.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
@@ -31,6 +31,7 @@ const createWindow = () => {
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
 };
+
 
 app.whenReady().then(() => {
   createWindow()
