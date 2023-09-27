@@ -18,3 +18,13 @@ body {
 .callsignInputContainer {
   margin-bottom: 15px;
 }
+
+.callsignInput {
+  text-transform: uppercase;
+}
+
+.container {
+  border: 1px solid;
+  padding: 10px;
+  margin: 10px 0;
+}

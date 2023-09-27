@@ -8,7 +8,7 @@ const selectSoundFileButton = document.getElementById('selectSoundFileButton');
 const soundFilePath = document.querySelector('.soundFilePath');
 const soundFileInput = document.getElementById('soundFileInput');
 
-let audioVolume = 0.5
+let audioVolume = 0.2
 
 const slider = document.getElementById("slider");
 const sliderValue = document.getElementById("sliderValue");

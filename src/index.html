@@ -7,34 +7,33 @@
     <script src="Morse.js"></script>
   </head>
   <body>
-    <h1>💖 This program will play a sound when you are called in WSJT-X!</h1>
-    <p>Welcome to Callsign Notifier application!</p>
-
-    <button class="testButton">Test sound</button>
+    <h1>Welcome to the Callsign Notifier!</h1>
+    <h3>💖 This program will play a sound when you are called in WSJT-X!</h3>
 
     <br>
 
-    <div class="callsignInputContainer">
+    <div class="callsignInputContainer container">
       <label>Your callsign
         <input type="text" class="callsignInput">
       </label>
     </div>
 
-    <div class="fileInputContainer">
+    <div class="fileInputContainer container">
     <input type="file" id="fileInput">
     <button id="selectFileButton">Select ALL.TXT File</button>
       <p class="filePath"></p>
     </div>
 
-    <div class="soundFileInputContainer">
+    <div class="soundFileInputContainer container">
     <input type="file" id="soundFileInput">
     <button id="selectSoundFileButton">Select sound file</button>
       <p class="soundFilePath"></p>
     </div>
 
     <div class="volumeSlider">
-    <input type="range" id="slider" min="0" max="1" step="0.1" value="0.5">
+    <input type="range" id="slider" min="0" max="1" step="0.1" value="0.2">
     <p>Volume: <span id="sliderValue">0.5</span></p>
+      <button class="testButton">Test sound</button>
     </div>
 
     <script type="text/javascript" src="renderer.js"></script>
