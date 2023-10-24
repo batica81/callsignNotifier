@@ -49,6 +49,8 @@ soundFileInput.addEventListener('change', () => {
     // Save the selected file path to localStorage
     localStorage.setItem('selectedSoundFilePath', selectedSoundFilePath);
     soundFilePath.textContent = selectedSoundFilePath
+    window.electronAPI.setTitle(selectedSoundFilePath)
+
 });
 
 testButton.addEventListener('click', () => {

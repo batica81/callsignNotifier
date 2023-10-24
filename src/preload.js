@@ -4,5 +4,6 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('electronAPI', {
-    handleCounter: (callback) => ipcRenderer.on('counter-value', callback)
+    handleCounter: (callback) => ipcRenderer.on('counter-value', callback),
+    setTitle: (title) => ipcRenderer.send('set-title', title)
 })

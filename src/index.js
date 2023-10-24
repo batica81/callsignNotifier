@@ -30,10 +30,23 @@ const createWindow = () => {
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
+
+
+
 };
 
 
 app.whenReady().then(() => {
+
+  ipcMain.on('set-title', (event, title) => {
+    // const webContents = event.sender
+    // const win = BrowserWindow.fromWebContents(webContents)
+    // win.setTitle(title)
+
+    console.log(title)
+  })
+
+
   createWindow()
 
   app.on('activate', function () {
@@ -49,6 +62,8 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
+
+
 
 app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
