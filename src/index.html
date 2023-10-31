@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>Callsign Notifier</title>
@@ -7,8 +7,8 @@
     <script src="Morse.js"></script>
   </head>
   <body>
-    <h1>Welcome to the Callsign Notifier!</h1>
-    <h3>💖 This program will play a sound when you are called in WSJT-X!</h3>
+    <h1>Welcome to Callsign Notifier! 💖</h1>
+    <h3>This program will play a sound or Morse code when you are called in WSJT-X!</h3>
 
     <br>
 
@@ -16,6 +16,8 @@
       <label>Your callsign
         <input type="text" class="callsignInput">
       </label>
+      <button id="confirmCallsign">Confirm your callsign</button>
+      <div class="callSignConfirmed">tracking callsign: <span class="callsignValue"></span></div>
     </div>
 
     <div class="fileInputContainer container">
@@ -24,10 +26,12 @@
       <p class="filePath"></p>
     </div>
 
+    <div class="soundTypeSelectorWrapper">
     <div class="soundFileInputContainer container">
     <input type="file" id="soundFileInput">
     <button id="selectSoundFileButton">Select sound file</button>
       <p class="soundFilePath"></p>
+    </div>
     </div>
 
     <div class="volumeSlider">

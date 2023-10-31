@@ -3,6 +3,9 @@ const audio = new Audio('beep.mp3');
 const testButton = document.querySelector('.testButton')
 const selectFileButton = document.getElementById('selectFileButton');
 const filePath = document.querySelector('.filePath');
+const confirmCallsign = document.querySelector('#confirmCallsign');
+const callsignInput = document.querySelector('.callsignInput');
+const callsignValue = document.querySelector('.callsignValue');
 
 const selectSoundFileButton = document.getElementById('selectSoundFileButton');
 const soundFilePath = document.querySelector('.soundFilePath');
@@ -33,6 +36,10 @@ selectFileButton.addEventListener('click', () => {
     fileInput.click(); // Trigger the file input element
 });
 
+confirmCallsign.addEventListener('click', () => {
+    callsignValue.textContent = callsignInput.value.toUpperCase()
+});
+
 selectSoundFileButton.addEventListener('click', () => {
     soundFileInput.click(); // Trigger the file input element
 });
@@ -42,6 +49,7 @@ fileInput.addEventListener('change', () => {
     // Save the selected file path to localStorage
     localStorage.setItem('selectedFilePath', selectedFilePath);
     filePath.textContent = selectedFilePath
+    window.electronAPI.setAllTxtFilePath(selectedFilePath)
 });
 
 soundFileInput.addEventListener('change', () => {
@@ -49,7 +57,7 @@ soundFileInput.addEventListener('change', () => {
     // Save the selected file path to localStorage
     localStorage.setItem('selectedSoundFilePath', selectedSoundFilePath);
     soundFilePath.textContent = selectedSoundFilePath
-    window.electronAPI.setTitle(selectedSoundFilePath)
+    window.electronAPI.setSoundFilePath(selectedSoundFilePath)
 
 });
 

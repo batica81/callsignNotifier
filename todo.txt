@@ -1,10 +1,10 @@
 play customizable sound file
 
-read write path from menu
-
 read callsign
 
 minimize to tray
+
+read from localstorage if present
 
 ui design :)
 

@@ -3,7 +3,7 @@ const path = require('path')
 const Tail = require('tail-file');
 
 let mainWindow
-const callsign = 'YU4HAK'
+let callsign = 'YU4HAK'
 // let tailFile = "/home/voja/.local/share/WSJT-X/test.txt"  //lin
 let tailFile = "/Users/Voja/AppData/Local/WSJT-X/test.txt"  //win
 // let tailFile = "/Users/Voja/AppData/Local/WSJT-X/all.txt"  //win
@@ -38,12 +38,17 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
 
-  ipcMain.on('set-title', (event, title) => {
-    // const webContents = event.sender
-    // const win = BrowserWindow.fromWebContents(webContents)
-    // win.setTitle(title)
+  ipcMain.on('set-sound-file-path', (event, soundFilePath) => {
+    console.log(soundFilePath)
+  })
 
-    console.log(title)
+  ipcMain.on('set-all-txt-file-path', (event, allTxtFilePath) => {
+    console.log(allTxtFilePath)
+  })
+
+  ipcMain.on('set-callsign', (event, userCallSign) => {
+    callsign = userCallSign;
+    console.log(userCallSign)
   })
 
 
