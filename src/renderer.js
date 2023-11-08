@@ -11,10 +11,20 @@ const selectSoundFileButton = document.getElementById('selectSoundFileButton');
 const soundFilePath = document.querySelector('.soundFilePath');
 const soundFileInput = document.getElementById('soundFileInput');
 
-let audioVolume = 0.2
+let audioVolume = 0.1
+let newSettings = {}
 
 const slider = document.getElementById("slider");
 const sliderValue = document.getElementById("sliderValue");
+
+if (localStorage.getItem("callsignNotifierSettings")) {
+
+    oldSettings = localStorage.getItem("callSignNotifierSettings")
+
+}
+// localStorage.setItem("callSignNotifierSettings", "testValue");
+
+
 
 // Function to update the variable value when the slider is moved
 function updateValue() {
@@ -37,7 +47,11 @@ selectFileButton.addEventListener('click', () => {
 });
 
 confirmCallsign.addEventListener('click', () => {
-    callsignValue.textContent = callsignInput.value.toUpperCase()
+    let callSignText = callsignInput.value.toUpperCase().trim();
+    callsignValue.textContent = callSignText
+    newSettings.callSignText = callSignText
+    localStorage.setItem(callSignNotifierSettings, newSettings)
+    window.electronAPI.setCallSign(callSignText)
 });
 
 selectSoundFileButton.addEventListener('click', () => {
@@ -49,6 +63,8 @@ fileInput.addEventListener('change', () => {
     // Save the selected file path to localStorage
     localStorage.setItem('selectedFilePath', selectedFilePath);
     filePath.textContent = selectedFilePath
+    newSettings.selectedFilePath = selectedFilePath
+    localStorage.setItem(callSignNotifierSettings, newSettings)
     window.electronAPI.setAllTxtFilePath(selectedFilePath)
 });
 
@@ -57,6 +73,8 @@ soundFileInput.addEventListener('change', () => {
     // Save the selected file path to localStorage
     localStorage.setItem('selectedSoundFilePath', selectedSoundFilePath);
     soundFilePath.textContent = selectedSoundFilePath
+    newSettings.selectedSoundFilePath = selectedSoundFilePath
+    localStorage.setItem(callSignNotifierSettings, newSettings)
     window.electronAPI.setSoundFilePath(selectedSoundFilePath)
 
 });
@@ -70,4 +88,9 @@ testButton.addEventListener('click', () => {
 function sendMorseMessage (message) {
     morseInit(audioVolume)
     MorseJs.Play(message, 20, 800);
+}
+
+function playSoundFile () {
+    // play audio file
+
 }

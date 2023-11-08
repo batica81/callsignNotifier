@@ -11,3 +11,9 @@ ui design :)
 releases
 
 code cleanup
+
+bug when multiple responses (play both at the same time)
+
+"<" not played
+
+write description using writerside

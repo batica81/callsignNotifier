@@ -4,10 +4,14 @@ const Tail = require('tail-file');
 
 let mainWindow
 let callsign = 'YU4HAK'
-// let tailFile = "/home/voja/.local/share/WSJT-X/test.txt"  //lin
-let tailFile = "/Users/Voja/AppData/Local/WSJT-X/test.txt"  //win
-// let tailFile = "/Users/Voja/AppData/Local/WSJT-X/all.txt"  //win
-tailFile = new Tail(tailFile)
+
+// let tailFilePath = "/home/voja/.local/share/WSJT-X/test.txt"  //lin
+let tailFilePath = "/Users/Voja/AppData/Local/WSJT-X/test.txt"  //win
+// let tailFilePath = "/Users/Voja/AppData/Local/WSJT-X/all.txt"  //win
+
+let soundFileLocation = ""
+
+let tailFile = '';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -29,7 +33,7 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
 
 
@@ -39,11 +43,31 @@ const createWindow = () => {
 app.whenReady().then(() => {
 
   ipcMain.on('set-sound-file-path', (event, soundFilePath) => {
-    console.log(soundFilePath)
+    soundFileLocation = soundFilePath
+    console.log(soundFileLocation)
   })
 
   ipcMain.on('set-all-txt-file-path', (event, allTxtFilePath) => {
-    console.log(allTxtFilePath)
+    tailFilePath = allTxtFilePath
+    tailFile = new Tail(tailFilePath)
+
+    tailFile.on('line', line => {
+      const lineArray = line.split(' ').filter(word => word !== '')
+      let messageArray = [lineArray[7], lineArray[8], lineArray[9]]
+      let messageString = messageArray.join(" ").trim()
+
+      console.log(line, 'line read!!!!!')
+
+      // alerting only if message for us, and is a response to CQ
+      if (lineArray[7] === callsign && lineArray[9].length > 2) {
+        console.log('Alerting ' + callsign)
+        mainWindow.webContents.send("counter-value", messageString)
+
+      }
+    })
+
+    tailFile.start()
+    console.log(tailFilePath)
   })
 
   ipcMain.on('set-callsign', (event, userCallSign) => {
@@ -81,17 +105,19 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-tailFile.on('line', line => {
-  const lineArray = line.split(' ').filter(word => word !== '')
-  let messageArray = [lineArray[7], lineArray[8], lineArray[9]]
-  let messageString = messageArray.join(" ").trim()
+// tailFile.on('line', line => {
+//   const lineArray = line.split(' ').filter(word => word !== '')
+//   let messageArray = [lineArray[7], lineArray[8], lineArray[9]]
+//   let messageString = messageArray.join(" ").trim()
+//
+//   console.log(line, 'line read!!!!!')
+//
+//   // alerting only if message for us, and is a response to CQ
+//   if (lineArray[7] === callsign && lineArray[9].length > 2) {
+//     console.log('Alerting ' + callsign)
+//     mainWindow.webContents.send("counter-value", messageString)
+//
+//   }
+// })
 
-  // alerting only if message for us, and is a response to CQ
-  if (lineArray[7] === callsign && lineArray[9].length > 2) {
-    console.log('Alerting ' + callsign)
-    mainWindow.webContents.send("counter-value", messageString)
-
-  }
-})
-
-tailFile.start()
+// tailFile.start()
