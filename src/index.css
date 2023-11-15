@@ -28,3 +28,9 @@ body {
   padding: 10px;
   margin: 10px 0;
 }
+
+.soundTypeSelectorWrapper {
+  justify-content: space-evenly;
+  display: flex;
+  margin: 0 10px;
+}

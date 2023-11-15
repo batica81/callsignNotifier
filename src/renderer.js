@@ -11,7 +11,7 @@ const selectSoundFileButton = document.getElementById('selectSoundFileButton');
 const soundFilePath = document.querySelector('.soundFilePath');
 const soundFileInput = document.getElementById('soundFileInput');
 
-let audioVolume = 0.1
+let audioVolume = 10
 let newSettings = {}
 
 const slider = document.getElementById("slider");
@@ -29,7 +29,7 @@ if (localStorage.getItem("callsignNotifierSettings")) {
 // Function to update the variable value when the slider is moved
 function updateValue() {
     audioVolume = slider.value;
-    sliderValue.textContent = audioVolume * 100 + '%';
+    sliderValue.textContent = audioVolume.toString()+ '%';
 }
 
 // Add an event listener to the slider to call the updateValue function when it changes
@@ -80,13 +80,13 @@ soundFileInput.addEventListener('change', () => {
 });
 
 testButton.addEventListener('click', () => {
-    morseInit(audioVolume)
+    morseInit(audioVolume / 10) // todo: test loudness
 //    audio.volume = audioVolume;
     sendMorseMessage("v")
 });
 
 function sendMorseMessage (message) {
-    morseInit(audioVolume)
+    morseInit(audioVolume / 10)
     MorseJs.Play(message, 20, 800);
 }
 

@@ -32,11 +32,14 @@
     <button id="selectSoundFileButton">Select sound file</button>
       <p class="soundFilePath"></p>
     </div>
+      <div class="morseOptionsContainer container">
+        <p>Morse options</p>
+      </div>
     </div>
 
     <div class="volumeSlider">
-    <input type="range" id="slider" min="0" max="1" step="0.1" value="0.1">
-    <p>Volume: <span id="sliderValue">0.5</span></p>
+    <input type="range" id="slider" min="0" max="100" step="1" value="10">
+    <p>Volume: <span id="sliderValue">10</span></p>
       <button class="testButton">Test sound</button>
     </div>
 
