@@ -50,7 +50,7 @@ confirmCallsign.addEventListener('click', () => {
     let callSignText = callsignInput.value.toUpperCase().trim();
     callsignValue.textContent = callSignText
     newSettings.callSignText = callSignText
-    localStorage.setItem(callSignNotifierSettings, newSettings)
+    localStorage.setItem('callSignNotifierSettings', newSettings)
     window.electronAPI.setCallSign(callSignText)
 });
 
@@ -64,7 +64,7 @@ fileInput.addEventListener('change', () => {
     localStorage.setItem('selectedFilePath', selectedFilePath);
     filePath.textContent = selectedFilePath
     newSettings.selectedFilePath = selectedFilePath
-    localStorage.setItem(callSignNotifierSettings, newSettings)
+    localStorage.setItem('callSignNotifierSettings', newSettings)
     window.electronAPI.setAllTxtFilePath(selectedFilePath)
 });
 
@@ -74,7 +74,7 @@ soundFileInput.addEventListener('change', () => {
     localStorage.setItem('selectedSoundFilePath', selectedSoundFilePath);
     soundFilePath.textContent = selectedSoundFilePath
     newSettings.selectedSoundFilePath = selectedSoundFilePath
-    localStorage.setItem(callSignNotifierSettings, newSettings)
+    localStorage.setItem('callSignNotifierSettings', newSettings)
     window.electronAPI.setSoundFilePath(selectedSoundFilePath)
 
 });

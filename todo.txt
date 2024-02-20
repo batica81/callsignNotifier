@@ -1,6 +1,12 @@
-play customizable sound file
+bug when multiple responses (play both at the same time)
 
-read callsign
+releases
+
+add persistence
+
+---------------------
+
+play customizable sound file
 
 minimize to tray
 
@@ -8,10 +14,8 @@ read from localstorage if present
 
 ui design :)
 
-releases
+dark mode
 
 code cleanup
-
-bug when multiple responses (play both at the same time)
 
 write description using writerside

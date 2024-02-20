@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Callsign Notifier</title>
-    <link rel="stylesheet" href="index.css" />
-    <script src="Morse.js"></script>
-  </head>
-  <body>
-    <h1>Welcome to Callsign Notifier! 💖</h1>
-    <h3>This program will play a sound or Morse code when you are called in WSJT-X!</h3>
+<head>
+  <meta charset="UTF-8" />
+  <title>Callsign Notifier</title>
+  <link href="index.css" rel="stylesheet" />
+  <script src="Morse.js"></script>
+</head>
+<body>
+<h1>Welcome to Callsign Notifier! 💖</h1>
+<h3>This program will play <span class="hidden">a sound or</span> Morse code when you are called in WSJT-X!</h3>
 
-    <br>
+<br>
 
-    <div class="callsignInputContainer container">
-      <label>Your callsign
-        <input type="text" class="callsignInput">
-      </label>
-      <button id="confirmCallsign">Confirm your callsign</button>
-      <div class="callSignConfirmed">Tracking callsign: <span class="callsignValue"></span></div>
-    </div>
+<div class="callsignInputContainer container">
+  <label>Your callsign
+    <input class="callsignInput" type="text">
+  </label>
+  <button id="confirmCallsign">Confirm your callsign</button>
+  <div class="callSignConfirmed">Tracking callsign: <span class="callsignValue"></span></div>
+</div>
 
-    <div class="fileInputContainer container">
-    <input type="file" id="fileInput">
-    <button id="selectFileButton">Select ALL.TXT File</button>
-      <p class="filePath"></p>
-    </div>
+<div class="fileInputContainer container">
+  <input id="fileInput" type="file">
+  <button id="selectFileButton">Select ALL.TXT File</button>
+  <p class="filePath"></p>
+</div>
 
-    <div class="soundTypeSelectorWrapper">
-    <div class="soundFileInputContainer container">
-    <input type="file" id="soundFileInput">
+<div class="soundTypeSelectorWrapper hidden">
+  <div class="soundFileInputContainer container">
+    <input id="soundFileInput" type="file">
     <button id="selectSoundFileButton">Select sound file</button>
-      <p class="soundFilePath"></p>
-    </div>
-      <div class="morseOptionsContainer container">
-        <p>Morse options</p>
-      </div>
-    </div>
+    <p class="soundFilePath"></p>
+  </div>
+  <div class="morseOptionsContainer container">
+    <p>Morse options</p>
+  </div>
+</div>
 
-    <div class="volumeSlider">
-    <input type="range" id="slider" min="0" max="100" step="1" value="10">
-    <p>Volume: <span id="sliderValue">10</span></p>
-      <button class="testButton">Test sound</button>
-    </div>
+<div class="volumeSlider">
+  <input id="slider" max="100" min="0" step="1" type="range" value="10">
+  <p>Volume: <span id="sliderValue">10</span></p>
+  <button class="testButton">Test sound</button>
+</div>
 
-    <script type="text/javascript" src="renderer.js"></script>
-  </body>
+<script src="renderer.js" type="text/javascript"></script>
+</body>
 </html>
