@@ -4,13 +4,13 @@ releases
 
 add persistence
 
+show default options on load
+
 ---------------------
 
 play customizable sound file
 
 minimize to tray
-
-read from localstorage if present
 
 ui design :)
 

@@ -7,5 +7,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     handleCounter: (callback) => ipcRenderer.on('counter-value', callback),
     setSoundFilePath: (arg) => ipcRenderer.send('set-sound-file-path', arg),
     setAllTxtFilePath: (arg) => ipcRenderer.send('set-all-txt-file-path', arg),
-    setCallSign: (arg) => ipcRenderer.send('set-callsign', arg)
+    setCallSign: (arg) => ipcRenderer.send('set-callsign', arg),
+    storageToRender: (callback) => ipcRenderer.on('storage-to-render', callback)
 })

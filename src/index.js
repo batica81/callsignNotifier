@@ -1,42 +1,19 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron')
 const path = require('path')
 const Tail = require('tail-file');
+const Store = require('electron-store');
+const store = new Store ();
 
 let mainWindow
 let callsign = 'YU4HAK'
 
 // let tailFilePath = "/home/voja/.local/share/WSJT-X/test.txt"  //lin
-let tailFilePath = "/Users/Voja/AppData/Local/WSJT-X/test.txt"  //win
-// let tailFilePath = "/Users/Voja/AppData/Local/WSJT-X/all.txt"  //win
+// let tailFilePath = "/Users/Voja/AppData/Local/WSJT-X/test.txt"  //win
+let tailFilePath = "/Users/Voja/AppData/Local/WSJT-X/all.txt"  //win
 
 let soundFileLocation = ""
 
 let tailFile = '';
-
-
-// todo: move from here and make it work for persistence
-const Store = require('electron-store');
-
-const store = new Store();
-
-store.set('unicorn', '🦄');
-console.log(store.get('unicorn'));
-//=> '🦄'
-
-// Use dot-notation to access nested properties
-store.set('foo.bar', true);
-console.log(store.get('foo'));
-//=> {bar: true}
-
-store.delete('unicorn');
-console.log(store.get('unicorn'));
-//=> undefined
-
-
-
-
-
-
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -51,6 +28,7 @@ const createWindow = () => {
     icon: path.join(__dirname, 'lion.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      sandbox: false,
     },
   });
 
@@ -60,6 +38,15 @@ const createWindow = () => {
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 
+  setTimeout(() => {
+
+    store.set('dataFromStorage', {'some' : 'data'})
+
+    let dataFromStorage =  store.get('dataFromStorage', {'some' : 6666666})
+
+    mainWindow.webContents.send("storage-to-render", dataFromStorage)
+
+  }, 1500)
 
 
 };
@@ -69,7 +56,7 @@ app.whenReady().then(() => {
 
   ipcMain.on('set-sound-file-path', (event, soundFilePath) => {
     soundFileLocation = soundFilePath
-    console.log(soundFileLocation)
+  //  console.log(soundFileLocation)
   })
 
   ipcMain.on('set-all-txt-file-path', (event, allTxtFilePath) => {
