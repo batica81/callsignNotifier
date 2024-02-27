@@ -2,20 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Callsign Notifier</title>
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
+  <title>CallSign Notifier</title>
   <link href="index.css" rel="stylesheet" />
   <script src="Morse.js"></script>
 </head>
 <body>
-<h1>Welcome to Callsign Notifier! 💖</h1>
+<h1>Welcome to CallSign Notifier! 💖</h1>
 <h3>This program will play <span class="hidden">a sound or</span> Morse code when you are called in WSJT-X!</h3>
 
 <br>
 
 <div class="callsignInputContainer container">
-  <label>Your callsign
-    <input class="callsignInput" type="text">
-  </label>
+    <label>Your callsign
+      <input class="callsignInput" type="text">
+    </label>
   <button id="confirmCallsign">Confirm your callsign</button>
   <div class="callSignConfirmed">Tracking callsign: <span class="callsignValue"></span></div>
 </div>

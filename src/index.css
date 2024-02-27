@@ -38,3 +38,11 @@ body {
 .hidden {
   display: none !important;
 }
+
+.callSignConfirmed {
+  margin: 10px 0;
+}
+
+.callsignValue {
+  font-weight: 700;
+}

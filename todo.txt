@@ -2,20 +2,10 @@ bug when multiple responses (play both at the same time)
 
 releases
 
-add persistence
-
-show default options on load
-
 ---------------------
 
-play customizable sound file
+Play customizable sound file instead of Morse
 
-minimize to tray
+Minimize to tray
 
-ui design :)
-
-dark mode
-
-code cleanup
-
-write description using writerside
+Dark mode

@@ -36,27 +36,31 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
+  // Timeout has to be used!
   setTimeout(() => {
 
-    store.set('dataFromStorage', {'some' : 'data'})
-
-    let dataFromStorage =  store.get('dataFromStorage', {'some' : 6666666})
+    // store.set('dataFromStorage', {'some' : 'data'})
+    let dataFromStorage =  store.get('dataFromStorage', {
+      'callSignText' : callsign,
+      'selectedFilePath' : tailFilePath,
+      'audioVolume' : 0.1
+    })
 
     mainWindow.webContents.send("storage-to-render", dataFromStorage)
-
   }, 1500)
-
-
 };
-
 
 app.whenReady().then(() => {
 
   ipcMain.on('set-sound-file-path', (event, soundFilePath) => {
     soundFileLocation = soundFilePath
-  //  console.log(soundFileLocation)
+  })
+
+  ipcMain.on('set-config-data', (event, newSettings) => {
+    console.log(newSettings)
+    store.set('dataFromStorage', newSettings)
   })
 
   ipcMain.on('set-all-txt-file-path', (event, allTxtFilePath) => {
@@ -65,16 +69,14 @@ app.whenReady().then(() => {
 
     tailFile.on('line', line => {
       const lineArray = line.split(' ').filter(word => word !== '')
-      let messageArray = [lineArray[7], lineArray[8], lineArray[9]]
+      let messageArray = [lineArray[7].replace('<', '').replace('>', ''), lineArray[8].replace('<', '').replace('>', ''), lineArray[9]]
       let messageString = messageArray.join(" ").trim()
-
-      console.log(line, 'line read!!!!!')
+      console.log(line, ' Line read!!!!!')
 
       // alerting only if message for us, and is a response to CQ
-      if (lineArray[7] === callsign && lineArray[9].length > 2) {
+      if (lineArray[7].replace('<', '').replace('>', '') === callsign && lineArray[9].length > 2) {
         console.log('Alerting ' + callsign)
-        mainWindow.webContents.send("counter-value", messageString)
-
+        mainWindow.webContents.send("callsign-value", messageString)
       }
     })
 
@@ -86,7 +88,6 @@ app.whenReady().then(() => {
     callsign = userCallSign;
     console.log(userCallSign)
   })
-
 
   createWindow()
 
@@ -104,8 +105,6 @@ app.on('window-all-closed', () => {
   }
 });
 
-
-
 app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
@@ -113,23 +112,3 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
-
-// tailFile.on('line', line => {
-//   const lineArray = line.split(' ').filter(word => word !== '')
-//   let messageArray = [lineArray[7], lineArray[8], lineArray[9]]
-//   let messageString = messageArray.join(" ").trim()
-//
-//   console.log(line, 'line read!!!!!')
-//
-//   // alerting only if message for us, and is a response to CQ
-//   if (lineArray[7] === callsign && lineArray[9].length > 2) {
-//     console.log('Alerting ' + callsign)
-//     mainWindow.webContents.send("counter-value", messageString)
-//
-//   }
-// })
-
-// tailFile.start()
