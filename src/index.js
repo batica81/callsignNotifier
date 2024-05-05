@@ -5,19 +5,42 @@ const Store = require('electron-store');
 const store = new Store ();
 
 let mainWindow
-let callsign = 'YU4HAK'
+// let callsign = 'YU4HAK'
 
 // let tailFilePath = "/home/voja/.local/share/WSJT-X/test.txt"  //lin
 // let tailFilePath = "/Users/Voja/AppData/Local/WSJT-X/test.txt"  //win
-let tailFilePath = "/Users/Voja/AppData/Local/WSJT-X/all.txt"  //win
+// let tailFilePath = "/Users/Voja/AppData/Local/WSJT-X/all.txt"  //win
 
 let soundFileLocation = ""
-
+let callsign = ''
 let tailFile = '';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
+}
+
+function setTextFile(allTxtFilePath){
+  // tailFilePath = allTxtFilePath
+  tailFile = new Tail(allTxtFilePath)
+
+  tailFile.on('line', line => {
+    const lineArray = line.split(' ').filter(word => word !== '')
+    if (lineArray.length > 8) {
+      let messageArray = [lineArray[7].replace('<', '').replace('>', ''), lineArray[8].replace('<', '').replace('>', ''), lineArray[9]]
+      let messageString = messageArray.join(" ").trim()
+      console.log(line, ' Line read!!!!!')
+
+      // alerting only if message for us, and is a response to CQ
+      if (lineArray[7].replace('<', '').replace('>', '') === callsign && lineArray[9].length > 2) {
+        console.log('Alerting ' + callsign)
+        mainWindow.webContents.send("callsign-value", messageString)
+      }
+    }
+  })
+
+  tailFile.start()
+  console.log('setting allTxtFilePath: ', allTxtFilePath)
 }
 
 const createWindow = () => {
@@ -43,10 +66,15 @@ const createWindow = () => {
 
     // store.set('dataFromStorage', {'some' : 'data'})
     let dataFromStorage =  store.get('dataFromStorage', {
-      'callSignText' : callsign,
-      'selectedFilePath' : tailFilePath,
+      'callSignText' : '',
+      'selectedFilePath' : '',
       'audioVolume' : 0.1
     })
+
+    callsign = dataFromStorage['callSignText']
+    tailFile = dataFromStorage['selectedFilePath'];
+
+    setTextFile(tailFile)
 
     mainWindow.webContents.send("storage-to-render", dataFromStorage)
   }, 1500)
@@ -63,26 +91,10 @@ app.whenReady().then(() => {
     store.set('dataFromStorage', newSettings)
   })
 
-  ipcMain.on('set-all-txt-file-path', (event, allTxtFilePath) => {
-    tailFilePath = allTxtFilePath
-    tailFile = new Tail(tailFilePath)
+  ipcMain.on('set-all-txt-file-path', (event, allTxtFilePath) => setTextFile(allTxtFilePath))
 
-    tailFile.on('line', line => {
-      const lineArray = line.split(' ').filter(word => word !== '')
-      let messageArray = [lineArray[7].replace('<', '').replace('>', ''), lineArray[8].replace('<', '').replace('>', ''), lineArray[9]]
-      let messageString = messageArray.join(" ").trim()
-      console.log(line, ' Line read!!!!!')
 
-      // alerting only if message for us, and is a response to CQ
-      if (lineArray[7].replace('<', '').replace('>', '') === callsign && lineArray[9].length > 2) {
-        console.log('Alerting ' + callsign)
-        mainWindow.webContents.send("callsign-value", messageString)
-      }
-    })
 
-    tailFile.start()
-    console.log(tailFilePath)
-  })
 
   ipcMain.on('set-callsign', (event, userCallSign) => {
     callsign = userCallSign;
