@@ -3,6 +3,7 @@ const path = require('path')
 const Tail = require('tail-file');
 const Store = require('electron-store');
 const store = new Store ();
+const _ = require('lodash');
 
 let mainWindow
 // let callsign = 'YU4HAK'
@@ -20,6 +21,12 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
+// Define a debounced version of the send function
+const debouncedSend = _.debounce((message) => {
+  mainWindow.webContents.send("callsign-value", message);
+}, 2000); // 4 seconds debounce time
+
+
 function setTextFile(allTxtFilePath){
   // tailFilePath = allTxtFilePath
   tailFile = new Tail(allTxtFilePath)
@@ -34,7 +41,9 @@ function setTextFile(allTxtFilePath){
       // alerting only if message for us, and is a response to CQ
       if (lineArray[7].replace('<', '').replace('>', '') === callsign && lineArray[9].length > 2) {
         console.log('Alerting ' + callsign)
-        mainWindow.webContents.send("callsign-value", messageString)
+
+        // Call the debounced send function instead of directly calling send
+        debouncedSend(messageString);
       }
     }
   })

@@ -1,8 +1,5 @@
 bug when multiple responses (play both at the same time)
 
-bug all file not remembered on startup
-
-
 releases
 
 ---------------------
