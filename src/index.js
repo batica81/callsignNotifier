@@ -24,7 +24,7 @@ if (require('electron-squirrel-startup')) {
 // Define a debounced version of the send function
 const debouncedSend = _.debounce((message) => {
   mainWindow.webContents.send("callsign-value", message);
-}, 2000); // 4 seconds debounce time
+}, 1000); // debounce time
 
 
 function setTextFile(allTxtFilePath){
