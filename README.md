@@ -25,8 +25,7 @@ WSJTX Callsign Notifier is a free application designed to notify users when thei
 Contributions are welcome! If you have any ideas for improvements or new features, feel free to submit a pull request.
 
 ## TODO
-0. Make proper releases
-1. **BUG:** When multiple responses, plays both at the same time
+1. Make proper releases
 2. Play customizable sound file instead of Morse
 3. Minimize to tray
 4. Dark mode
@@ -35,5 +34,5 @@ Contributions are welcome! If you have any ideas for improvements or new feature
 This project is licensed under the [Unlicense](LICENSE).
 
 ## Support
-For any questions or issues, please contact me. Email is good on QRZ :) 
+For any questions or issues, please contact me. Email is good on QRZ :) 73 YU4HAK
 
